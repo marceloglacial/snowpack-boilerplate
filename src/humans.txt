@@ -11,5 +11,3 @@
 
 	Language: English / Portuguese
 	Doctype:HTML5
-	IDE: VS Code, Sketch
-	Tools: Bootstrap 3, AnimateCSS, Wow JS
