@@ -1,2 +1,2 @@
 // Add Styles
-import style from "./_scss/main.scss";
+import style from "./assets/sass/main.scss";
