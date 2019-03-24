@@ -55,12 +55,17 @@ module.exports = {
         ]
       },
       {
-        // BABEL 
+        // ESLinte
+        enforce: "pre",
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        loader: "eslint-loader"
+      },
+      {
+        // BABEL
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       }
     ]
   },
