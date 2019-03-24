@@ -16,19 +16,25 @@ module.exports = {
         }]
       },
       {
-        // Optimize Images
+        // Inline Small Images
         test: /\.(png|jpe?g)/i,
         use: [{
             loader: "url-loader",
             options: {
               name: "./img/[name].[ext]",
-              limit: 3000
+              limit: 30 * 1024
             }
           },
           {
             loader: "img-loader"
           }
         ]
+      },
+      {
+        // Optmize image
+        test: /\.(jpg|png|gif|svg)$/,
+        loader: 'image-webpack-loader',
+        enforce: 'pre'
       },
       {
         // Compile SASS
