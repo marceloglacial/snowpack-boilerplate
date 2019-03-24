@@ -91,13 +91,18 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    // new CopyWebpackPlugin([{
-    //   from: 'app',
-    //     ignore: ['**/*.js', '**/*.html', 'assets/**/*.*', 'vendor/**/*.*']
-    // }]),
+    new CopyWebpackPlugin([{
+      from: '.',
+      ignore: ['**/*.js', '**/*.html', 'assets/**/*.*', 'vendor/**/*.*'],
+      to: '.'
+    }]),
     new HtmlWebPackPlugin({
       template: "index.html",
       filename: "./index.html"
+    }),
+    new HtmlWebPackPlugin({
+      template: "contact.html",
+      filename: "./contact.html"
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
