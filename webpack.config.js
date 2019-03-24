@@ -1,3 +1,4 @@
+const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
@@ -6,9 +7,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  context: path.resolve('./app'),
+  entry: './assets/js/app.js',
   module: {
     rules: [{
-        // HTML minifier
+        // HTML loader and minifier
         test: /\.html$/,
         use: [{
           loader: "html-loader",
@@ -18,12 +21,12 @@ module.exports = {
         }]
       },
       {
-        // Inline Small Images
+        // Load images
         test: /\.(png|jpe?g)/i,
         use: [{
             loader: "url-loader",
             options: {
-              name: "./img/[name].[ext]",
+              name: "img/[name].[ext]",
               limit: 30 * 1024
             }
           },
@@ -40,7 +43,7 @@ module.exports = {
       },
       {
         // Compile SASS
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
@@ -49,7 +52,7 @@ module.exports = {
         ]
       },
       {
-        // Minify CSS on build
+        // Load CSS
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -72,7 +75,7 @@ module.exports = {
     ]
   },
 
-  // Minify JS 
+  // Minify JS and CSS
   // Setting optimization.minimizer overrides the defaults provided by webpack, 
   // so make sure to also specify a JS minimize
   // https://github.com/webpack-contrib/mini-css-extract-plugin
@@ -81,20 +84,19 @@ module.exports = {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        parallel: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([{
-      from: 'src',
-        ignore: ['index.js', 'assets/**/*.*', 'vendor/**/*.*']
-    }]),
+    // new CopyWebpackPlugin([{
+    //   from: 'app',
+    //     ignore: ['**/*.js', '**/*.html', 'assets/**/*.*', 'vendor/**/*.*']
+    // }]),
     new HtmlWebPackPlugin({
-      template: "src/index.html",
+      template: "index.html",
       filename: "./index.html"
     }),
     new MiniCssExtractPlugin({
